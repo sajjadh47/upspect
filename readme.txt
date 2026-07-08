@@ -42,7 +42,7 @@ Updates can introduce new features, bug fixes, security patches, or significant 
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/version-diff` directory, or install through the WordPress Plugins screen.
+1. Upload the plugin files to the `/wp-content/plugins/upspect` directory, or install through the WordPress Plugins screen.
 2. Activate the plugin through the Plugins screen in WordPress.
 3. Go to **Plugins**.
 4. When an update is available, click **Full Diff** to preview the changes.

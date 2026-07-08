@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the definition of the Version_Diff_Public class, which
+ * This file contains the definition of the UpSpect_Public class, which
  * is used to load the plugin's public-facing functionality.
  *
  * @package       Sajjad67\UpSpect

@@ -91,7 +91,7 @@ class UpSpect_Admin {
 
 		wp_localize_script(
 			$this->plugin_name,
-			'Version_Diff',
+			'UpSpect',
 			array(
 				'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
 				'nonce'                   => wp_create_nonce( 'vrsndff_ajax_nonce' ),

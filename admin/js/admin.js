@@ -9,19 +9,19 @@ jQuery( document ).ready( function( $ ) {
 		var btn   = $( this );
 		var modal = $( '#vrsndff-diff-modal' );
 
-		$( '#vrsndff-diff-sidebar-tree' ).html( '<p class="vrsndff-scanning-codebase">' + Version_Diff.scanningCodebaseTxti18n + '</p>' );
-		$( '#vrsndff-diff-viewscreen' ).html( '<p class="vrsndff-file-selection-msg">' + Version_Diff.fileSelectionTxti18n + '</p>' );
+		$( '#vrsndff-diff-sidebar-tree' ).html( '<p class="vrsndff-scanning-codebase">' + UpSpect.scanningCodebaseTxti18n + '</p>' );
+		$( '#vrsndff-diff-viewscreen' ).html( '<p class="vrsndff-file-selection-msg">' + UpSpect.fileSelectionTxti18n + '</p>' );
 
 		modal.show();
 
 		$( 'body' ).addClass( 'vrsndff-modal-open' );
 
-		$.post( Version_Diff.ajaxurl, {
+		$.post( UpSpect.ajaxurl, {
 			action: 'vrsndff_get_plugin_diff',
 			slug: btn.data( 'slug' ),
 			file: btn.data( 'file' ),
 			version: btn.data( 'version' ),
-			nonce: Version_Diff.nonce
+			nonce: UpSpect.nonce
 		},
 		function( response ) {
 			if( response.success ) {
@@ -34,7 +34,7 @@ jQuery( document ).ready( function( $ ) {
 					firstFile.click();
 				}
 			} else {
-				$( '#vrsndff-diff-sidebar-tree' ).html( '<p class="vrsndff-failed-to-index">' + Version_Diff.failedToIndexTxti18n + '</p>' );
+				$( '#vrsndff-diff-sidebar-tree' ).html( '<p class="vrsndff-failed-to-index">' + UpSpect.failedToIndexTxti18n + '</p>' );
 				$( '#vrsndff-diff-viewscreen' ).html( '<p class="vrsndff-failed-message">' + response.data + '</p>' );
 			}
 		} );
@@ -55,18 +55,18 @@ jQuery( document ).ready( function( $ ) {
 
 		$( this ).addClass( 'vrsndff-is-active-file' );
 
-		$( '#vrsndff-diff-viewscreen' ).html( '<p class="vrsndff-loading-diff">' + Version_Diff.loadingDiffTxti18n + '</p>' );
+		$( '#vrsndff-diff-viewscreen' ).html( '<p class="vrsndff-loading-diff">' + UpSpect.loadingDiffTxti18n + '</p>' );
 
 		var fileKey = $( this ).data( 'filepath' );
 
 		if( diffCache[ fileKey ] ) {
 			$( '#vrsndff-diff-viewscreen' ).html( diffCache[ fileKey ] );
 		} else {
-			$.post( Version_Diff.ajaxurl, {
+			$.post( UpSpect.ajaxurl, {
 				action: 'vrsndff_get_file_diff',
 				cache_key: cacheKey,
 				filepath: fileKey,
-				nonce: Version_Diff.nonce
+				nonce: UpSpect.nonce
 			},
 			function ( response ) {
 				if ( response.success ) {
@@ -85,10 +85,10 @@ jQuery( document ).ready( function( $ ) {
 
 		$( 'body' ).removeClass( 'vrsndff-modal-open' );
 
-		$.post( Version_Diff.ajaxurl, {
+		$.post( UpSpect.ajaxurl, {
 			action: 'vrsndff_delete_temporary_files',
 			cache_key: cacheKey,
-			nonce: Version_Diff.nonce
+			nonce: UpSpect.nonce
 		} );
 	} );
 } );
