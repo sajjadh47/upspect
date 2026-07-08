@@ -3,7 +3,7 @@
  * Fired when the plugin is uninstalled.
  *
  * @since      1.0.0
- * @package    Sajjad67\VersionDiff
+ * @package    Sajjad67\UpSpect
  * @author     Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 

@@ -3,12 +3,12 @@
  * This file contains the definition of the Version_Diff_Public class, which
  * is used to load the plugin's public-facing functionality.
  *
- * @package       Sajjad67\VersionDiff
- * @subpackage    Sajjad67\VersionDiff/public
+ * @package       Sajjad67\UpSpect
+ * @subpackage    Sajjad67\UpSpect/public
  * @author        Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
-namespace Sajjad67\VersionDiff;
+namespace Sajjad67\UpSpect;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since    1.0.0
  */
-class Version_Diff_Public {
+class UpSpect_Public {
 	/**
 	 * The ID of this plugin.
 	 *

@@ -3,8 +3,8 @@
  * Silence is golden
  *
  * @since         1.0.0
- * @package       Sajjad67\VersionDiff
- * @subpackage    Sajjad67\VersionDiff/admin
+ * @package       Sajjad67\UpSpect
+ * @subpackage    Sajjad67\UpSpect/admin
  * @author        Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 

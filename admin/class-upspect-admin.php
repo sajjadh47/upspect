@@ -1,14 +1,14 @@
 <?php
 /**
- * This file contains the definition of the Version_Diff_Admin class, which
+ * This file contains the definition of the UpSpect_Admin class, which
  * is used to load the plugin's admin-specific functionality.
  *
- * @package       Version_Diff
- * @subpackage    Version_Diff/admin
+ * @package       UpSpect
+ * @subpackage    UpSpect/admin
  * @author        Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
-namespace Sajjad67\VersionDiff;
+namespace Sajjad67\UpSpect;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since    1.0.0
  */
-class Version_Diff_Admin {
+class UpSpect_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
@@ -70,7 +70,7 @@ class Version_Diff_Admin {
 
 		wp_enqueue_style( 'colors' );
 
-		wp_enqueue_style( $this->plugin_name, VRSNDFF_VERSION_DIFF_PLUGIN_URL . 'admin/css/admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, VRSNDFF_UPSPECT_PLUGIN_URL . 'admin/css/admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Version_Diff_Admin {
 
 		wp_enqueue_script( 'wp-diff-checker-js' );
 
-		wp_enqueue_script( $this->plugin_name, VRSNDFF_VERSION_DIFF_PLUGIN_URL . 'admin/js/admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, VRSNDFF_UPSPECT_PLUGIN_URL . 'admin/js/admin.js', array( 'jquery' ), $this->version, false );
 
 		wp_localize_script(
 			$this->plugin_name,
@@ -95,11 +95,11 @@ class Version_Diff_Admin {
 			array(
 				'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
 				'nonce'                   => wp_create_nonce( 'vrsndff_ajax_nonce' ),
-				'scanningCodebaseTxti18n' => __( 'Scanning codebase...', 'version-diff' ),
-				'fileSelectionTxti18n'    => __( 'Please select a file from the sidebar tree to inspect changes.', 'version-diff' ),
-				'failedToIndexTxti18n'    => __( 'Failed to index.', 'version-diff' ),
-				'noCodeChangedTxti18n'    => __( 'No code changes inside this file layout.', 'version-diff' ),
-				'loadingDiffTxti18n'      => __( 'Loading diff...', 'version-diff' ),
+				'scanningCodebaseTxti18n' => __( 'Scanning codebase...', 'upspect' ),
+				'fileSelectionTxti18n'    => __( 'Please select a file from the sidebar tree to inspect changes.', 'upspect' ),
+				'failedToIndexTxti18n'    => __( 'Failed to index.', 'upspect' ),
+				'noCodeChangedTxti18n'    => __( 'No code changes inside this file layout.', 'upspect' ),
+				'loadingDiffTxti18n'      => __( 'Loading diff...', 'upspect' ),
 			)
 		);
 	}
@@ -161,7 +161,7 @@ class Version_Diff_Admin {
 		?>
 		<div id="vrsndff-diff-modal">
 			<div class="vrsndff-diff-modal-header">
-				<button type="button" class="vrsndff-close-diff-modal-btn"><?php esc_html_e( 'Close Window', 'version-diff' ); ?></button>
+				<button type="button" class="vrsndff-close-diff-modal-btn"><?php esc_html_e( 'Close Window', 'upspect' ); ?></button>
 			</div>
 			
 			<div class="vrsndff-diff-modal-content">
@@ -179,11 +179,11 @@ class Version_Diff_Admin {
 		check_ajax_referer( 'vrsndff_ajax_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'update_plugins' ) ) {
-			wp_send_json_error( __( 'Unauthorized access.', 'version-diff' ) );
+			wp_send_json_error( __( 'Unauthorized access.', 'upspect' ) );
 		}
 
 		if ( empty( $_POST['slug'] ) || empty( $_POST['file'] ) || empty( $_POST['version'] ) ) {
-			wp_send_json_error( __( 'Missing required params.', 'version-diff' ) );
+			wp_send_json_error( __( 'Missing required params.', 'upspect' ) );
 		}
 
 		$slug        = sanitize_key( $_POST['slug'] );
@@ -193,13 +193,13 @@ class Version_Diff_Admin {
 		$current_update = get_site_transient( 'update_plugins' );
 
 		if ( ! isset( $current_update->response[ $plugin_file ]->package ) ) {
-			wp_send_json_error( __( 'No valid update transient package mapping.', 'version-diff' ) );
+			wp_send_json_error( __( 'No valid update transient package mapping.', 'upspect' ) );
 		}
 
 		$package_url = $current_update->response[ $plugin_file ]->package;
 
 		if ( empty( $package_url ) ) {
-			wp_send_json_error( __( 'Public package URL not provided.', 'version-diff' ) );
+			wp_send_json_error( __( 'Public package URL not provided.', 'upspect' ) );
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -211,13 +211,13 @@ class Version_Diff_Admin {
 			wp_send_json_error( $tmp_zip->get_error_message() );
 		}
 
-		$unzip_dir = WP_CONTENT_DIR . '/upgrade/diff-cache-' . $slug . '-' . time();
+		$unzip_dir = get_temp_dir() . 'diff-cache-' . $slug . '-' . time();
 		$unzipped  = unzip_file( $tmp_zip, $unzip_dir );
 
 		wp_delete_file( $tmp_zip );
 
 		if ( is_wp_error( $unzipped ) ) {
-			wp_send_json_error( __( 'Failed extracting target archive.', 'version-diff' ) );
+			wp_send_json_error( __( 'Failed extracting target archive.', 'upspect' ) );
 		}
 
 		$plugin_dir_name = dirname( $plugin_file );
@@ -331,19 +331,24 @@ class Version_Diff_Admin {
 		check_ajax_referer( 'vrsndff_ajax_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'update_plugins' ) ) {
-			wp_send_json_error( __( 'Unauthorized access.', 'version-diff' ) );
+			wp_send_json_error( __( 'Unauthorized access.', 'upspect' ) );
 		}
 
 		if ( empty( $_POST['cache_key'] ) || empty( $_POST['filepath'] ) ) {
-			wp_send_json_error( __( 'Missing required params.', 'version-diff' ) );
+			wp_send_json_error( __( 'Missing required params.', 'upspect' ) );
 		}
 
-		$cache_key = sanitize_text_field( wp_unslash( $_POST['cache_key'] ) );
+		$cache_key = sanitize_key( wp_unslash( $_POST['cache_key'] ) );
 		$file_path = sanitize_text_field( wp_unslash( $_POST['filepath'] ) );
-		$cache     = get_transient( $cache_key );
+
+		if ( ! preg_match( '/^vrsndff_[a-f0-9]{32}$/i', $cache_key ) ) {
+			wp_send_json_error( __( 'Invalid cache key.', 'upspect' ) );
+		}
+
+		$cache = get_transient( $cache_key );
 
 		if ( ! $cache || empty( $cache['tree_nodes'][ $file_path ] ) ) {
-			wp_send_json_error( __( 'Cache expired or file not found.', 'version-diff' ) );
+			wp_send_json_error( __( 'Cache expired or file not found.', 'upspect' ) );
 		}
 
 		$file   = $cache['tree_nodes'][ $file_path ];
@@ -366,8 +371,8 @@ class Version_Diff_Admin {
 				'',
 				$remote_code,
 				array(
-					'title_left'      => __( 'Non-Existent File', 'version-diff' ),
-					'title_right'     => __( 'New File Version', 'version-diff' ),
+					'title_left'      => __( 'Non-Existent File', 'upspect' ),
+					'title_right'     => __( 'New File Version', 'upspect' ),
 					'show_split_view' => true,
 				)
 			);
@@ -388,8 +393,8 @@ class Version_Diff_Admin {
 			$local_code,
 			$remote_code,
 			array(
-				'title_left'      => __( 'Current Version', 'version-diff' ),
-				'title_right'     => __( 'Update Version', 'version-diff' ),
+				'title_left'      => __( 'Current Version', 'upspect' ),
+				'title_right'     => __( 'Update Version', 'upspect' ),
 				'show_split_view' => true,
 			)
 		);
@@ -407,18 +412,23 @@ class Version_Diff_Admin {
 		check_ajax_referer( 'vrsndff_ajax_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'update_plugins' ) ) {
-			wp_send_json_error( __( 'Unauthorized access.', 'version-diff' ) );
+			wp_send_json_error( __( 'Unauthorized access.', 'upspect' ) );
 		}
 
 		if ( empty( $_POST['cache_key'] ) ) {
-			wp_send_json_error( __( 'Missing required params.', 'version-diff' ) );
+			wp_send_json_error( __( 'Missing required params.', 'upspect' ) );
 		}
 
-		$cache_key = sanitize_text_field( wp_unslash( $_POST['cache_key'] ) );
-		$cache     = get_transient( $cache_key );
+		$cache_key = sanitize_key( wp_unslash( $_POST['cache_key'] ) );
+
+		if ( ! preg_match( '/^vrsndff_[a-f0-9]{32}$/i', $cache_key ) ) {
+			wp_send_json_error( __( 'Invalid cache key.', 'upspect' ) );
+		}
+
+		$cache = get_transient( $cache_key );
 
 		if ( ! $cache || empty( $cache['unzip_dir'] ) ) {
-			wp_send_json_error( __( 'Cache expired.', 'version-diff' ) );
+			wp_send_json_error( __( 'Cache expired.', 'upspect' ) );
 		}
 
 		$unzip_dir = sanitize_text_field( $cache['unzip_dir'] );
@@ -429,7 +439,7 @@ class Version_Diff_Admin {
 
 		$wp_filesystem->delete( $unzip_dir, true );
 
-		wp_send_json_success( __( 'Success', 'version-diff' ) );
+		wp_send_json_success( __( 'Success', 'upspect' ) );
 	}
 
 	/**
@@ -530,11 +540,11 @@ class Version_Diff_Admin {
 				$badge_html = '';
 
 				if ( 'modified' === $node['status'] ) {
-					$badge_html = sprintf( '<span class="vrsndff-git-badge vrsndff-git-mod">%s: +%d/-%d</span>', __( 'mod', 'version-diff' ), $node['meta']['adds'], $node['meta']['dels'] );
+					$badge_html = sprintf( '<span class="vrsndff-git-badge vrsndff-git-mod">%s: +%d/-%d</span>', __( 'mod', 'upspect' ), $node['meta']['adds'], $node['meta']['dels'] );
 				} elseif ( 'added' === $node['status'] ) {
-					$badge_html = sprintf( '<span class="vrsndff-git-badge vrsndff-git-add">%s</span>', __( 'new', 'version-diff' ) );
+					$badge_html = sprintf( '<span class="vrsndff-git-badge vrsndff-git-add">%s</span>', __( 'new', 'upspect' ) );
 				} elseif ( 'deleted' === $node['status'] ) {
-					$badge_html = sprintf( '<span class="vrsndff-git-badge vrsndff-git-del">%s</span>', __( 'del', 'version-diff' ) );
+					$badge_html = sprintf( '<span class="vrsndff-git-badge vrsndff-git-del">%s</span>', __( 'del', 'upspect' ) );
 				}
 
 				$html .= sprintf(

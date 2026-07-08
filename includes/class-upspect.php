@@ -1,18 +1,18 @@
 <?php
 /**
- * This file contains the definition of the Version_Diff class, which
+ * This file contains the definition of the UpSpect class, which
  * is used to begin the plugin's functionality.
  *
- * @package       Version_Diff
- * @subpackage    Version_Diff/includes
+ * @package       UpSpect
+ * @subpackage    UpSpect/includes
  * @author        Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
-namespace Sajjad67\VersionDiff;
+namespace Sajjad67\UpSpect;
 
-use Sajjad67\VersionDiff\Version_Diff_Loader;
-use Sajjad67\VersionDiff\Version_Diff_Admin;
-use Sajjad67\VersionDiff\Version_Diff_Public;
+use Sajjad67\UpSpect\UpSpect_Loader;
+use Sajjad67\UpSpect\UpSpect_Admin;
+use Sajjad67\UpSpect\UpSpect_Public;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,14 +29,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since    1.0.0
  */
-class Version_Diff {
+class UpSpect {
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
 	 * @since     1.0.0
 	 * @access    protected
-	 * @var       Version_Diff_Loader $loader Maintains and registers all hooks for the plugin.
+	 * @var       UpSpect_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -69,8 +69,8 @@ class Version_Diff {
 	 * @access    public
 	 */
 	public function __construct() {
-		$this->version     = defined( 'VRSNDFF_VERSION_DIFF_PLUGIN_VERSION' ) ? VRSNDFF_VERSION_DIFF_PLUGIN_VERSION : '1.0.0';
-		$this->plugin_name = 'version-diff';
+		$this->version     = defined( 'VRSNDFF_UPSPECT_PLUGIN_VERSION' ) ? VRSNDFF_UPSPECT_PLUGIN_VERSION : '1.0.0';
+		$this->plugin_name = 'upspect';
 
 		$this->load_dependencies();
 		$this->define_admin_hooks();
@@ -82,9 +82,9 @@ class Version_Diff {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Version_Diff_Loader. Orchestrates the hooks of the plugin.
-	 * - Version_Diff_Admin.  Defines all hooks for the admin area.
-	 * - Version_Diff_Public. Defines all hooks for the public side of the site.
+	 * - UpSpect_Loader. Orchestrates the hooks of the plugin.
+	 * - UpSpect_Admin.  Defines all hooks for the admin area.
+	 * - UpSpect_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -97,20 +97,20 @@ class Version_Diff {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once VRSNDFF_VERSION_DIFF_PLUGIN_PATH . 'includes/class-version-diff-loader.php';
+		require_once VRSNDFF_UPSPECT_PLUGIN_PATH . 'includes/class-upspect-loader.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once VRSNDFF_VERSION_DIFF_PLUGIN_PATH . 'admin/class-version-diff-admin.php';
+		require_once VRSNDFF_UPSPECT_PLUGIN_PATH . 'admin/class-upspect-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once VRSNDFF_VERSION_DIFF_PLUGIN_PATH . 'public/class-version-diff-public.php';
+		require_once VRSNDFF_UPSPECT_PLUGIN_PATH . 'public/class-upspect-public.php';
 
-		$this->loader = new Version_Diff_Loader();
+		$this->loader = new UpSpect_Loader();
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Version_Diff {
 	 * @access    private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin = new Version_Diff_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new UpSpect_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -143,7 +143,7 @@ class Version_Diff {
 	 * @access    private
 	 */
 	private function define_public_hooks() {
-		$plugin_public = new Version_Diff_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new UpSpect_Public( $this->get_plugin_name(), $this->get_version() );
 	}
 
 	/**
@@ -172,7 +172,7 @@ class Version_Diff {
 	 *
 	 * @since     1.0.0
 	 * @access    public
-	 * @return    Version_Diff_Loader Orchestrates the hooks of the plugin.
+	 * @return    UpSpect_Loader Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

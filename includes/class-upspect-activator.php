@@ -1,14 +1,14 @@
 <?php
 /**
- * This file contains the definition of the Version_Diff_Activator class, which
+ * This file contains the definition of the UpSpect_Activator class, which
  * is used during plugin activation.
  *
- * @package       Version_Diff
- * @subpackage    Version_Diff/includes
+ * @package       UpSpect
+ * @subpackage    UpSpect/includes
  * @author        Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
-namespace Sajjad67\VersionDiff;
+namespace Sajjad67\UpSpect;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since    1.0.0
  */
-class Version_Diff_Activator {
+class UpSpect_Activator {
 	/**
 	 * Activation hook.
 	 *
