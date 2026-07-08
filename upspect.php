@@ -10,7 +10,7 @@
  * @package           Sajjad67\UpSpect
  * @author            Sajjad Hossain Sagor <sagorh672@gmail.com>
  *
- * Plugin Name:       UpSpect – Plugin Update Inspector
+ * Plugin Name:       UpSpect – Update Inspector
  * Plugin URI:        https://wordpress.org/plugins/upspect/
  * Description:       Preview and inspect plugin updates before installing them. Compare files, review code changes, and see exactly what has changed between versions.
  * Version:           1.0.0

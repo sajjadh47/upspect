@@ -1,4 +1,4 @@
-# UpSpect – Plugin Update Inspector
+# UpSpect – Update Inspector
 
 [![Plugin Banner](https://ps.w.org/upspect/assets/banner-1544x500.png)](https://wordpress.org/plugins/upspect/)
 

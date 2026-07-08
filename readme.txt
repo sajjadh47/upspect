@@ -1,4 +1,4 @@
-=== UpSpect – Plugin Update Inspector ===
+=== UpSpect – Update Inspector ===
 Contributors: sajjad67
 Tags: version, diff, update, code review, changelog
 Requires at least: 6.5
